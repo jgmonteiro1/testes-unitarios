@@ -29,6 +29,15 @@ public class LocacaoService {
 	}
 
 	public static void main(String[] args) {
-		
+		//cenario
+		Usuario usuario = new Usuario("João");
+		Filme filme = new Filme("Django Livre", 10, 5.0);
+		LocacaoService service = new LocacaoService();
+		//ação
+		Locacao locacao = service.alugarFilme(usuario,filme);
+		//resultado
+		System.out.println(locacao.getDataLocacao());
+		System.out.println(locacao.getDataRetorno());
+		System.out.println(locacao.getValor());
 	}
 }
