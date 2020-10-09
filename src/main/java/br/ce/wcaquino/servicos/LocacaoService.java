@@ -40,5 +40,6 @@ public class LocacaoService {
 		System.out.println(DataUtils.isMesmaData(locacao.getDataLocacao(), new Date()));
 		System.out.println(DataUtils.isMesmaData(locacao.getDataRetorno(), DataUtils.obterDataComDiferencaDias(1)));
 		System.out.println(locacao.getValor() == 5.0);
+		System.out.println("Teste git");
 	}
 }
