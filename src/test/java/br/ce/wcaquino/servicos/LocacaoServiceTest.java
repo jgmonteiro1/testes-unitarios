@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 import java.util.Date;
 
 import static br.ce.wcaquino.utils.DataUtils.adicionarDias;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.*;
 
 public class LocacaoServiceTest {
 	@Test
@@ -21,8 +23,9 @@ public class LocacaoServiceTest {
 		//ação
 		Locacao locacao = service.alugarFilme(usuario,filme);
 		//resultado
-		Assert.assertTrue(DataUtils.isMesmaData(locacao.getDataLocacao(), new Date()));
-		Assert.assertTrue(DataUtils.isMesmaData(locacao.getDataRetorno(), DataUtils.obterDataComDiferencaDias(1)));
-		Assert.assertEquals(5.0,locacao.getValor(), 0.01);
+		assertTrue(DataUtils.isMesmaData(locacao.getDataLocacao(), new Date()));
+		assertTrue(DataUtils.isMesmaData(locacao.getDataRetorno(), DataUtils.obterDataComDiferencaDias(1)));
+		assertEquals(5.0,locacao.getValor(), 0.01);
+		assertThat(locacao.getValor(), is(5.0));
 	}
 }
