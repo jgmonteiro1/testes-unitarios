@@ -74,7 +74,7 @@ public class DataUtils {
 	 * Verifica se uma determinada data é o dia da semana desejado
 	 * 
 	 * @param data Data a ser avaliada
-	 * @param diaSemana <code>true</code> caso seja o dia da semana desejado, <code>false</code> em caso contrário 
+	 * @param diaSemana <code>true</code> caso seja o dia da semana desejado, <code>false</code> em caso contrário
 	 * @return
 	 */
 	public static boolean verificarDiaSemana(Date data, int diaSemana) {
