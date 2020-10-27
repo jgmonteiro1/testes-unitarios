@@ -5,7 +5,9 @@ import br.ce.wcaquino.entidades.Locacao;
 import br.ce.wcaquino.entidades.Usuario;
 import br.ce.wcaquino.utils.DataUtils;
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.jupiter.api.Test;
+import org.junit.rules.ErrorCollector;
 
 import java.util.Date;
 
@@ -16,6 +18,9 @@ import static org.junit.Assert.*;
 
 public class LocacaoServiceTest {
 
+	@Rule
+	public ErrorCollector error = new ErrorCollector();
+
 	@Test
 	public void valorDaLocacaoTest(){
 		//cenario
@@ -25,7 +30,7 @@ public class LocacaoServiceTest {
 		//ação
 		Locacao locacao = service.alugarFilme(usuario,filme);
 		//resultado
-		assertThat(locacao.getValor(), is(equalTo(5.0)));
+		error.checkThat(locacao.getValor(), is(equalTo(5.0)));
 	}
 
 	@Test
