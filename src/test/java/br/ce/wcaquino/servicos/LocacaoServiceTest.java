@@ -18,42 +18,60 @@ import static org.junit.Assert.*;
 
 public class LocacaoServiceTest {
 
-	@Rule
-	public ErrorCollector error = new ErrorCollector();
+    @Rule
+    public ErrorCollector error = new ErrorCollector();
 
-	@Test
-	public void valorDaLocacaoTest(){
-		//cenario
-		Usuario usuario = new Usuario("João");
-		Filme filme = new Filme("Django Livre", 10, 5.0);
-		LocacaoService service = new LocacaoService();
-		//ação
-		Locacao locacao = service.alugarFilme(usuario,filme);
-		//resultado
-		error.checkThat(locacao.getValor(), is(equalTo(5.0)));
-	}
+    @Test
+    public void valorDaLocacaoTest() {
+        //cenario
+        Usuario usuario = new Usuario("João");
+        Filme filme = new Filme("Django Livre", 10, 5.0);
+        LocacaoService service = new LocacaoService();
+        Locacao locacao;
+        try {
+            //ação
+            locacao = service.alugarFilme(usuario, filme);
+            error.checkThat(locacao.getValor(), is(equalTo(5.0)));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-	@Test
-	public void dataLocacaoTest(){
-		//cenario
-		Usuario usuario = new Usuario("João");
-		Filme filme = new Filme("Django Livre", 10, 5.0);
-		LocacaoService service = new LocacaoService();
-		//ação
-		Locacao locacao = service.alugarFilme(usuario,filme);
-		//resultado
-		assertThat(isMesmaData(locacao.getDataLocacao(), new Date()),is(true));
-	}
+    }
 
-	@Test
-	public void dataRetornoTest(){
-		//cenario
-		Usuario usuario = new Usuario("João");
-		Filme filme = new Filme("Django Livre", 10, 5.0);
-		LocacaoService service = new LocacaoService();
-		//ação
-		Locacao locacao = service.alugarFilme(usuario,filme);
-		//resultado
-		assertThat(isMesmaData( locacao.getDataRetorno(), obterDataComDiferencaDias(1)),is(true));
-	}
+    @Test
+    public void dataLocacaoTest() {
+        //cenario
+        Usuario usuario = new Usuario("João");
+        Filme filme = new Filme("Django Livre", 10, 5.0);
+        LocacaoService service = new LocacaoService();
+        Locacao locacao;
+        try {
+            //ação
+            locacao = service.alugarFilme(usuario, filme);
+            //resultado
+            assertThat(isMesmaData(locacao.getDataLocacao(), new Date()), is(true));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Test
+    public void dataRetornoTest() {
+        //cenario
+        Usuario usuario = new Usuario("João");
+        Filme filme = new Filme("Django Livre", 10, 5.0);
+        LocacaoService service = new LocacaoService();
+        Locacao locacao;
+        try {
+            //ação
+            locacao = service.alugarFilme(usuario, filme);
+            //resultado
+            assertThat(isMesmaData(locacao.getDataRetorno(), obterDataComDiferencaDias(1)), is(true));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+    
 }
