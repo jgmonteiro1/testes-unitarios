@@ -93,9 +93,21 @@ public class LocacaoServiceTest {
         //ação
         try {
             locacaoService.alugarFilme(null, filme);
-            fail();
+            fail(   );
         } catch (LocadoraException e) {
             assertThat(e.getMessage(), is("Usuário vazio"));
         }
+    }
+
+    @Test
+    public void filmeExisteTest() throws FilmeSemEstoqueException, LocadoraException {
+        //cenario
+        Usuario usuario = new Usuario("João");
+        LocacaoService service = new LocacaoService();
+
+        expectedException.expect(LocadoraException.class);
+
+        //acao
+        service.alugarFilme(usuario, null);
     }
 }
