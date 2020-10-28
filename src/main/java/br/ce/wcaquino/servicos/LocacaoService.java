@@ -8,15 +8,26 @@ import br.ce.wcaquino.entidades.Filme;
 import br.ce.wcaquino.entidades.Locacao;
 import br.ce.wcaquino.entidades.Usuario;
 import br.ce.wcaquino.utils.DataUtils;
+import exceptions.FilmeSemEstoqueException;
+import exceptions.LocadoraException;
 import org.junit.Assert;
 import org.junit.jupiter.api.AssertionsKt;
 import org.junit.jupiter.api.Test;
 
 public class LocacaoService {
 
-	public Locacao alugarFilme(Usuario usuario, Filme filme) throws Exception{
+	public Locacao alugarFilme(Usuario usuario, Filme filme) throws FilmeSemEstoqueException, LocadoraException {
+
 		if(filme.getEstoque() == 0){
-			throw  new Exception("Filme sem estoque");
+			throw  new FilmeSemEstoqueException("Filme sem estoque");
+		}
+
+		if (usuario == null) {
+			throw new LocadoraException("Usuário vazio");
+		}
+
+		if(filme == null){
+			throw new LocadoraException("Filme vazio");
 		}
 
 		Locacao locacao = new Locacao();

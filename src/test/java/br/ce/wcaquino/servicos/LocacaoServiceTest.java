@@ -4,6 +4,8 @@ import br.ce.wcaquino.entidades.Filme;
 import br.ce.wcaquino.entidades.Locacao;
 import br.ce.wcaquino.entidades.Usuario;
 import br.ce.wcaquino.utils.DataUtils;
+import exceptions.FilmeSemEstoqueException;
+import exceptions.LocadoraException;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
@@ -41,7 +43,7 @@ public class LocacaoServiceTest {
     }
 
     @Test
-    public void dataLocacaoTest() throws Exception{
+    public void dataLocacaoTest() throws Exception {
         //cenario
         Usuario usuario = new Usuario("João");
         Filme filme = new Filme("Django Livre", 10, 5.0);
@@ -62,7 +64,7 @@ public class LocacaoServiceTest {
         Filme filme = new Filme("Django Livre", 10, 5.0);
         LocacaoService service = new LocacaoService();
 
-       //Ação
+        //Ação
         Locacao locacao = service.alugarFilme(usuario, filme);
 
         //resultado
@@ -70,20 +72,30 @@ public class LocacaoServiceTest {
 
     }
 
-    @Test
+    @Test(expected = FilmeSemEstoqueException.class)
     public void filmeSemEstoqueTest() throws Exception {
         //cenario
         Usuario usuario = new Usuario("João");
         Filme filme = new Filme("Django Livre", 0, 5.0);
         LocacaoService service = new LocacaoService();
 
-        //Deve ser declarada antes da execução da ação
-        expectedException.expect(Exception.class);
-
         //Ação
         service.alugarFilme(usuario, filme);
 
     }
 
+    @Test
+    public void usuarioVazioTest() throws FilmeSemEstoqueException{
+        //cenario
+        LocacaoService locacaoService = new LocacaoService();
+        Filme filme = new Filme("Django Livre", 5, 5.0);
 
+        //ação
+        try {
+            locacaoService.alugarFilme(null, filme);
+            fail();
+        } catch (LocadoraException e) {
+            assertThat(e.getMessage(), is("Usuário vazio"));
+        }
+    }
 }
