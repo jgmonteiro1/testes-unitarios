@@ -66,7 +66,7 @@ public class LocacaoServiceTest {
 
     }
 
-    @Test(expected = Exception.class)
+    @Test
     public void filmeSemEstoqueTest() throws  Exception{
         //cenario
         Usuario usuario = new Usuario("João");
@@ -74,7 +74,12 @@ public class LocacaoServiceTest {
         LocacaoService service = new LocacaoService();
 
         //Ação
-       service.alugarFilme(usuario, filme);
+        try{
+            service.alugarFilme(usuario, filme);
+        } catch (Exception e){
+            assertThat(e.getMessage(), is("Filme sem estoque"));
+        }
+
     }
 
 
