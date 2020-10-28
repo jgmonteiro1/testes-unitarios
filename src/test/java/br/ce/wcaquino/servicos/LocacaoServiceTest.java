@@ -6,7 +6,7 @@ import br.ce.wcaquino.entidades.Usuario;
 import br.ce.wcaquino.utils.DataUtils;
 import org.junit.Assert;
 import org.junit.Rule;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.rules.ErrorCollector;
 
 import java.util.Date;
@@ -22,39 +22,32 @@ public class LocacaoServiceTest {
     public ErrorCollector error = new ErrorCollector();
 
     @Test
-    public void valorDaLocacaoTest() {
+    public void valorDaLocacaoTest() throws Exception {
         //cenario
         Usuario usuario = new Usuario("João");
         Filme filme = new Filme("Django Livre", 10, 5.0);
         LocacaoService service = new LocacaoService();
-        Locacao locacao;
-        try {
-            //ação
-            locacao = service.alugarFilme(usuario, filme);
-            error.checkThat(locacao.getValor(), is(equalTo(5.0)));
-        } catch (Exception e) {
-            Assert.fail("Filme sem estoque");
-            e.printStackTrace();
-        }
+
+        //ação
+        Locacao locacao = service.alugarFilme(usuario, filme);
+
+        //resultado
+        error.checkThat(locacao.getValor(), is(equalTo(5.0)));
 
     }
 
     @Test
-    public void dataLocacaoTest() {
+    public void dataLocacaoTest() throws Exception{
         //cenario
         Usuario usuario = new Usuario("João");
         Filme filme = new Filme("Django Livre", 10, 5.0);
         LocacaoService service = new LocacaoService();
-        Locacao locacao;
-        try {
-            //ação
-            locacao = service.alugarFilme(usuario, filme);
-            //resultado
-            assertThat(isMesmaData(locacao.getDataLocacao(), new Date()), is(true));
-        } catch (Exception e) {
-            Assert.fail("Filme sem estoque");
-            e.printStackTrace();
-        }
+
+        //ação
+        Locacao locacao = service.alugarFilme(usuario, filme);
+
+        //resultado
+        assertThat(isMesmaData(locacao.getDataLocacao(), new Date()), is(true));
 
     }
 
@@ -62,7 +55,7 @@ public class LocacaoServiceTest {
     public void dataRetornoTest() throws Exception {
         //cenario
         Usuario usuario = new Usuario("João");
-        Filme filme = new Filme("Django Livre", 0, 5.0);
+        Filme filme = new Filme("Django Livre", 10, 5.0);
         LocacaoService service = new LocacaoService();
 
        //Ação
@@ -72,5 +65,17 @@ public class LocacaoServiceTest {
         assertThat(isMesmaData(locacao.getDataRetorno(), obterDataComDiferencaDias(1)), is(true));
 
     }
+
+    @Test(expected = Exception.class)
+    public void filmeSemEstoqueTest() throws  Exception{
+        //cenario
+        Usuario usuario = new Usuario("João");
+        Filme filme = new Filme("Django Livre", 0, 5.0);
+        LocacaoService service = new LocacaoService();
+
+        //Ação
+       service.alugarFilme(usuario, filme);
+    }
+
 
 }
