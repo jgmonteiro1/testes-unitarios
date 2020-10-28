@@ -13,7 +13,9 @@ import org.junit.Test;
 import org.junit.rules.ErrorCollector;
 import org.junit.rules.ExpectedException;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import static br.ce.wcaquino.utils.DataUtils.*;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -40,13 +42,13 @@ public class LocacaoServiceTest {
     public void valorDaLocacaoTest() throws Exception {
         //cenario
         Usuario usuario = new Usuario("João");
-        Filme filme = new Filme("Django Livre", 10, 5.0);
+        List<Filme> filmes = Arrays.asList(new Filme("Django Livre", 10, 5.0));
 
         //ação
-       Locacao locacao = service.alugarFilme(usuario, filme);
+       Locacao locacao = service.alugarFilme(usuario, filmes);
 
         //resultado
-        error.checkThat(locacao.getValor(), is(equalTo(5.0)));
+        assertThat(locacao.getValor(), is(equalTo(5.0)));
 
     }
 
@@ -54,10 +56,10 @@ public class LocacaoServiceTest {
     public void dataLocacaoTest() throws Exception {
         //cenario
         Usuario usuario = new Usuario("João");
-        Filme filme = new Filme("Django Livre", 10, 5.0);
+        List<Filme> filmes = Arrays.asList(new Filme("Django Livre", 10, 5.0));
 
         //ação
-       Locacao locacao = service.alugarFilme(usuario, filme);
+       Locacao locacao = service.alugarFilme(usuario, filmes);
 
         //resultado
         assertThat(isMesmaData(locacao.getDataLocacao(), new Date()), is(true));
@@ -68,10 +70,10 @@ public class LocacaoServiceTest {
     public void dataRetornoTest() throws Exception {
         //cenario
         Usuario usuario = new Usuario("João");
-        Filme filme = new Filme("Django Livre", 10, 5.0);
+        List<Filme> filmes = Arrays.asList(new Filme("Django Livre", 10, 5.0));
 
         //Ação
-        Locacao locacao = service.alugarFilme(usuario, filme);
+        Locacao locacao = service.alugarFilme(usuario, filmes);
 
         //resultado
         assertThat(isMesmaData(locacao.getDataRetorno(), obterDataComDiferencaDias(1)), is(true));
@@ -82,21 +84,21 @@ public class LocacaoServiceTest {
     public void filmeSemEstoqueTest() throws Exception {
         //cenario
         Usuario usuario = new Usuario("João");
-        Filme filme = new Filme("Django Livre", 0, 5.0);
+        List<Filme> filmes = Arrays.asList(new Filme("Django Livre", 0, 5.0));
 
         //Ação
-        service.alugarFilme(usuario, filme);
+        service.alugarFilme(usuario, filmes);
 
     }
 
     @Test
     public void usuarioVazioTest() throws FilmeSemEstoqueException{
         //cenario
-        Filme filme = new Filme("Django Livre", 5, 5.0);
+        List<Filme> filmes = Arrays.asList(new Filme("Django Livre", 0, 5.0));
 
         //ação
         try {
-            service.alugarFilme(null, filme);
+            service.alugarFilme(null, filmes);
             fail();
         } catch (LocadoraException e) {
             assertThat(e.getMessage(), is("Usuário vazio"));
