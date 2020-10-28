@@ -8,6 +8,7 @@ import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ErrorCollector;
+import org.junit.rules.ExpectedException;
 
 import java.util.Date;
 
@@ -20,6 +21,9 @@ public class LocacaoServiceTest {
 
     @Rule
     public ErrorCollector error = new ErrorCollector();
+
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
 
     @Test
     public void valorDaLocacaoTest() throws Exception {
@@ -67,18 +71,17 @@ public class LocacaoServiceTest {
     }
 
     @Test
-    public void filmeSemEstoqueTest() throws  Exception{
+    public void filmeSemEstoqueTest() throws Exception {
         //cenario
         Usuario usuario = new Usuario("João");
         Filme filme = new Filme("Django Livre", 0, 5.0);
         LocacaoService service = new LocacaoService();
 
+        //Deve ser declarada antes da execução da ação
+        expectedException.expect(Exception.class);
+
         //Ação
-        try{
-            service.alugarFilme(usuario, filme);
-        } catch (Exception e){
-            assertThat(e.getMessage(), is("Filme sem estoque"));
-        }
+        service.alugarFilme(usuario, filme);
 
     }
 
