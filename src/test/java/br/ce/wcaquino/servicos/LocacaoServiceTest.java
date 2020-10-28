@@ -33,6 +33,7 @@ public class LocacaoServiceTest {
             locacao = service.alugarFilme(usuario, filme);
             error.checkThat(locacao.getValor(), is(equalTo(5.0)));
         } catch (Exception e) {
+            Assert.fail("Filme sem estoque");
             e.printStackTrace();
         }
 
@@ -51,6 +52,7 @@ public class LocacaoServiceTest {
             //resultado
             assertThat(isMesmaData(locacao.getDataLocacao(), new Date()), is(true));
         } catch (Exception e) {
+            Assert.fail("Filme sem estoque");
             e.printStackTrace();
         }
 
@@ -60,7 +62,7 @@ public class LocacaoServiceTest {
     public void dataRetornoTest() {
         //cenario
         Usuario usuario = new Usuario("João");
-        Filme filme = new Filme("Django Livre", 10, 5.0);
+        Filme filme = new Filme("Django Livre", 0, 5.0);
         LocacaoService service = new LocacaoService();
         Locacao locacao;
         try {
@@ -69,9 +71,10 @@ public class LocacaoServiceTest {
             //resultado
             assertThat(isMesmaData(locacao.getDataRetorno(), obterDataComDiferencaDias(1)), is(true));
         } catch (Exception e) {
+            Assert.fail("Filme sem estoque");
             e.printStackTrace();
         }
 
     }
-    
+
 }
