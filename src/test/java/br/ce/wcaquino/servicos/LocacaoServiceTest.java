@@ -176,7 +176,7 @@ public class LocacaoServiceTest {
 
     }
 
-    @Test
+    @Test//Esse método só funciona no sábado.
     public void naoDeveDevolverFilmeNoDomingo() throws FilmeSemEstoqueException, LocadoraException {
         Usuario usuario = new Usuario("Joao");
         List<Filme> filmes = Arrays.asList(new Filme("Filme1", 1, 1.0));
