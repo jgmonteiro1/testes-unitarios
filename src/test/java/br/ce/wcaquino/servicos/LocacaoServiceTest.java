@@ -115,4 +115,63 @@ public class LocacaoServiceTest {
         //acao
         service.alugarFilme(usuario, null);
     }
+
+    @Test
+    public void deveAplicarDesconto25Test() throws FilmeSemEstoqueException, LocadoraException {
+        //cenario
+        List<Filme> filmes = Arrays.asList(new Filme("Django Livre", 10, 4.0), new Filme("Spirit o corcel indomável", 5, 4.0), new Filme("Testes: Um grito de socorro", 1, 4.0));
+        Usuario usuario = new Usuario("Teste");
+
+        //ação
+        Locacao locacao = service.alugarFilme(usuario, filmes);
+
+        //verificação
+        assertThat(locacao.getValor(), is(11.0));
+
+    }
+
+    @Test
+    public void deveAplicarDesconto50Test() throws FilmeSemEstoqueException, LocadoraException {
+        //cenario
+        List<Filme> filmes = Arrays.asList(new Filme("Django Livre", 10, 4.0), new Filme("Spirit o corcel indomável", 5, 4.0), new Filme("Testes: Um grito de socorro", 1, 4.0), new Filme("Filme 4", 1, 4.0));
+        Usuario usuario = new Usuario("Teste");
+
+        //ação
+        Locacao locacao = service.alugarFilme(usuario, filmes);
+
+        //verificação
+        //4+4+3+2
+        assertThat(locacao.getValor(), is(13.0));
+
+    }
+
+    @Test
+    public void deveAplicarDesconto75Test() throws FilmeSemEstoqueException, LocadoraException {
+        //cenario
+        List<Filme> filmes = Arrays.asList(new Filme("Django Livre", 10, 4.0), new Filme("Spirit o corcel indomável", 5, 4.0), new Filme("Testes: Um grito de socorro", 1, 4.0), new Filme("Filme 4", 1, 4.0), new Filme("Filme 5", 1, 4.0));
+        Usuario usuario = new Usuario("Teste");
+
+        //ação
+        Locacao locacao = service.alugarFilme(usuario, filmes);
+
+        //verificação
+        //4+4+3+2+1
+        assertThat(locacao.getValor(), is(14.0));
+
+    }
+
+    @Test
+    public void deveAplicarDesconto100Test() throws FilmeSemEstoqueException, LocadoraException {
+        //cenario
+        List<Filme> filmes = Arrays.asList(new Filme("Django Livre", 10, 4.0), new Filme("Spirit o corcel indomável", 5, 4.0), new Filme("Testes: Um grito de socorro", 1, 4.0), new Filme("Filme 4", 1, 4.0), new Filme("Filme 5", 1, 4.0), new Filme("Filme 6", 1, 4.0));
+        Usuario usuario = new Usuario("Teste");
+
+        //ação
+        Locacao locacao = service.alugarFilme(usuario, filmes);
+
+        //verificação
+        //4+4+3+2+1+0
+        assertThat(locacao.getValor(), is(14.0));
+
+    }
 }

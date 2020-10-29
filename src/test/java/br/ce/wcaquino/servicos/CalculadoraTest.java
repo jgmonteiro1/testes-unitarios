@@ -1,9 +1,15 @@
 package br.ce.wcaquino.servicos;
 
+import br.ce.wcaquino.entidades.Filme;
+import br.ce.wcaquino.entidades.Usuario;
 import exceptions.DivisaoPorZeroException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class CalculadoraTest {
 
@@ -15,7 +21,7 @@ public class CalculadoraTest {
     }
 
     @Test
-    public void deveSomarDoisValores(){
+    public void deveSomarDoisValoresTest(){
         //cenario
         int a = 5;
         int b = 3;
@@ -26,7 +32,7 @@ public class CalculadoraTest {
     }
 
     @Test
-    public void deveSubtrairDoisValores(){
+    public void deveSubtrairDoisValoresTest(){
         //cenario
         int a = 5;
         int b = 3;
@@ -37,7 +43,7 @@ public class CalculadoraTest {
     }
 
     @Test
-    public void deveMultiplicarDoisValores(){
+    public void deveMultiplicarDoisValoresTest(){
         //cenario
         int a = 5;
         int b = 3;
@@ -48,7 +54,7 @@ public class CalculadoraTest {
     }
 
     @Test
-    public void deveDividirDoisValores() throws DivisaoPorZeroException {
+    public void deveDividirDoisValoresTest() throws DivisaoPorZeroException {
         //cenario
         int a = 10;
         int b = 2;
@@ -59,11 +65,12 @@ public class CalculadoraTest {
     }
 
     @Test(expected = DivisaoPorZeroException.class)
-    public void lancaExceptionDividindoPorZero() throws DivisaoPorZeroException {
+    public void lancaExceptionDividindoPorZeroTest() throws DivisaoPorZeroException {
         int a = 10;
         int b = 0;
 
         calc.divide(a,b);
     }
+
 
 }
