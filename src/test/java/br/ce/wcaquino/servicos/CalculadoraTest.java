@@ -1,16 +1,24 @@
 package br.ce.wcaquino.servicos;
 
+import exceptions.DivisaoPorZeroException;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 public class CalculadoraTest {
+
+    private  Calculadora calc;
+
+    @Before
+    public void setup(){
+        calc = new Calculadora();
+    }
 
     @Test
     public void deveSomarDoisValores(){
         //cenario
         int a = 5;
         int b = 3;
-        Calculadora calc = new Calculadora();
         //acao
         int resultado = calc.somar(a, b);
         //verificacao
@@ -22,7 +30,6 @@ public class CalculadoraTest {
         //cenario
         int a = 5;
         int b = 3;
-        Calculadora calc = new Calculadora();
         //acao
         int resultado = calc.subtrair(a,b);
         //resultado
@@ -34,7 +41,6 @@ public class CalculadoraTest {
         //cenario
         int a = 5;
         int b = 3;
-        Calculadora calc = new Calculadora();
         //acao
         int resultado = calc.multiplicar(a,b);
         //resultado
@@ -42,15 +48,22 @@ public class CalculadoraTest {
     }
 
     @Test
-    public void deveDividirDoisValores(){
+    public void deveDividirDoisValores() throws DivisaoPorZeroException {
         //cenario
         int a = 10;
         int b = 2;
-        Calculadora calc = new Calculadora();
         //acao
         int resultado = calc.divide(a,b);
         //resultado
         Assert.assertEquals(5, resultado);
+    }
+
+    @Test(expected = DivisaoPorZeroException.class)
+    public void lancaExceptionDividindoPorZero() throws DivisaoPorZeroException {
+        int a = 10;
+        int b = 0;
+
+        calc.divide(a,b);
     }
 
 }
