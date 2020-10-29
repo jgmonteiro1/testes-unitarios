@@ -1,5 +1,7 @@
 package br.ce.wcaquino.servicos;
 
+import br.ce.wcaquino.builders.FilmeBuilder;
+import br.ce.wcaquino.builders.UsuarioBuilder;
 import br.ce.wcaquino.entidades.Filme;
 import br.ce.wcaquino.entidades.Locacao;
 import br.ce.wcaquino.entidades.Usuario;
@@ -18,6 +20,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import static br.ce.wcaquino.builders.FilmeBuilder.filmeBuilder;
+import static br.ce.wcaquino.builders.UsuarioBuilder.usuarioBuilder;
 import static br.ce.wcaquino.matchers.MatchersProprios.caiEm;
 import static br.ce.wcaquino.utils.DataUtils.*;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -45,8 +49,8 @@ public class LocacaoServiceTest {
     public void valorDaLocacaoTest() throws Exception {
         Assume.assumeFalse  (DataUtils.verificarDiaSemana(new Date(), Calendar.SATURDAY));
         //cenario
-        Usuario usuario = new Usuario("João");
-        List<Filme> filmes = Arrays.asList(new Filme("Django Livre", 10, 5.0));
+        Usuario usuario = usuarioBuilder().now();
+        List<Filme> filmes = Arrays.asList(filmeBuilder().now());
 
         //ação
        Locacao locacao = service.alugarFilme(usuario, filmes);
@@ -59,8 +63,8 @@ public class LocacaoServiceTest {
     @Test
     public void dataLocacaoTest() throws Exception {
         //cenario
-        Usuario usuario = new Usuario("João");
-        List<Filme> filmes = Arrays.asList(new Filme("Django Livre", 10, 5.0));
+        Usuario usuario = usuarioBuilder().now();
+        List<Filme> filmes = Arrays.asList(filmeBuilder().now());
 
         //ação
        Locacao locacao = service.alugarFilme(usuario, filmes);
@@ -73,8 +77,8 @@ public class LocacaoServiceTest {
     @Test
     public void dataRetornoTest() throws Exception {
         //cenario
-        Usuario usuario = new Usuario("João");
-        List<Filme> filmes = Arrays.asList(new Filme("Django Livre", 10, 5.0));
+        Usuario usuario = usuarioBuilder().now();
+        List<Filme> filmes = Arrays.asList(filmeBuilder().now());
 
         //Ação
         Locacao locacao = service.alugarFilme(usuario, filmes);
@@ -87,8 +91,8 @@ public class LocacaoServiceTest {
     @Test(expected = FilmeSemEstoqueException.class)
     public void filmeSemEstoqueTest() throws Exception {
         //cenario
-        Usuario usuario = new Usuario("João");
-        List<Filme> filmes = Arrays.asList(new Filme("Django Livre", 0, 5.0));
+        Usuario usuario = usuarioBuilder().now();
+        List<Filme> filmes = Arrays.asList(filmeBuilder().semEstoque().now());
 
         //Ação
         service.alugarFilme(usuario, filmes);
@@ -98,7 +102,7 @@ public class LocacaoServiceTest {
     @Test
     public void usuarioVazioTest() throws FilmeSemEstoqueException{
         //cenario
-        List<Filme> filmes = Arrays.asList(new Filme("Django Livre", 0, 5.0));
+        List<Filme> filmes = Arrays.asList(filmeBuilder().now());
 
         //ação
         try {
@@ -112,7 +116,7 @@ public class LocacaoServiceTest {
     @Test
     public void filmeExisteTest() throws FilmeSemEstoqueException, LocadoraException {
         //cenario
-        Usuario usuario = new Usuario("João");
+        Usuario usuario = usuarioBuilder().now();
 
         expectedException.expect(LocadoraException.class);
 
@@ -125,8 +129,8 @@ public class LocacaoServiceTest {
     @Test//Esse método só funciona no sábado.
     public void naoDeveDevolverFilmeNoDomingo() throws FilmeSemEstoqueException, LocadoraException {
         Assume.assumeTrue(DataUtils.verificarDiaSemana(new Date(), Calendar.SATURDAY));
-        Usuario usuario = new Usuario("Joao");
-        List<Filme> filmes = Arrays.asList(new Filme("Filme1", 1, 1.0));
+        Usuario usuario = usuarioBuilder().now();
+        List<Filme> filmes = Arrays.asList(filmeBuilder().now());
 
         //ação
         Locacao retorno = service.alugarFilme(usuario, filmes);
