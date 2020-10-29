@@ -47,7 +47,7 @@ public class LocacaoService {
 				case 2: valorFilme = valorFilme * 0.75; break;
 				case 3: valorFilme = valorFilme * 0.50; break;
 				case 4: valorFilme = valorFilme * 0.25; break;
-				case 5: valorFilme = 0d break;
+				case 5: valorFilme = 0d; break;
 			}
 
 			valorTotal += valorFilme;
