@@ -3,6 +3,7 @@ package br.ce.wcaquino.servicos;
 import br.ce.wcaquino.entidades.Filme;
 import br.ce.wcaquino.entidades.Locacao;
 import br.ce.wcaquino.entidades.Usuario;
+import br.ce.wcaquino.matchers.DiaSemanaMatcher;
 import br.ce.wcaquino.utils.DataUtils;
 import exceptions.FilmeSemEstoqueException;
 import exceptions.LocadoraException;
@@ -131,5 +132,6 @@ public class LocacaoServiceTest {
         //verificação
         boolean  segundaFeira = DataUtils.verificarDiaSemana(retorno.getDataRetorno(), Calendar.MONDAY);
         assertTrue(segundaFeira);
+        assertThat(retorno.getDataRetorno(), new DiaSemanaMatcher(Calendar.MONDAY));
     }
 }
