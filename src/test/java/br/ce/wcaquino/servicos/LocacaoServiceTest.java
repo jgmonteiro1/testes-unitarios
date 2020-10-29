@@ -6,12 +6,10 @@ import br.ce.wcaquino.entidades.Usuario;
 import br.ce.wcaquino.utils.DataUtils;
 import exceptions.FilmeSemEstoqueException;
 import exceptions.LocadoraException;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.rules.ErrorCollector;
 import org.junit.rules.ExpectedException;
+import sun.util.resources.cldr.wae.CalendarData_wae_CH;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -34,6 +32,7 @@ public class LocacaoServiceTest {
     public ExpectedException expectedException = ExpectedException.none();
 
 
+
     @Before
     public void setup(){
         service = new LocacaoService();
@@ -41,6 +40,7 @@ public class LocacaoServiceTest {
 
     @Test
     public void valorDaLocacaoTest() throws Exception {
+        Assume.assumeFalse(DataUtils.verificarDiaSemana(new Date(), Calendar.SATURDAY));
         //cenario
         Usuario usuario = new Usuario("João");
         List<Filme> filmes = Arrays.asList(new Filme("Django Livre", 10, 5.0));
@@ -178,6 +178,7 @@ public class LocacaoServiceTest {
 
     @Test//Esse método só funciona no sábado.
     public void naoDeveDevolverFilmeNoDomingo() throws FilmeSemEstoqueException, LocadoraException {
+        Assume.assumeTrue(DataUtils.verificarDiaSemana(new Date(), Calendar.SATURDAY));
         Usuario usuario = new Usuario("Joao");
         List<Filme> filmes = Arrays.asList(new Filme("Filme1", 1, 1.0));
 
