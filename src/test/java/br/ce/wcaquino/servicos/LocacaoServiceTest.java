@@ -2,6 +2,8 @@ package br.ce.wcaquino.servicos;
 
 import br.ce.wcaquino.builders.FilmeBuilder;
 import br.ce.wcaquino.builders.UsuarioBuilder;
+import br.ce.wcaquino.dao.LocacaoDAO;
+import br.ce.wcaquino.dao.LocacaoDAOFake;
 import br.ce.wcaquino.entidades.Filme;
 import br.ce.wcaquino.entidades.Locacao;
 import br.ce.wcaquino.entidades.Usuario;
@@ -32,6 +34,8 @@ public class LocacaoServiceTest {
 
     private LocacaoService service;
 
+    private LocacaoDAO locacaoDAO;
+
     @Rule
     public ErrorCollector error = new ErrorCollector();
 
@@ -43,6 +47,10 @@ public class LocacaoServiceTest {
     @Before
     public void setup(){
         service = new LocacaoService();
+        //Passando um objeto que está implementando a interface locacaoDAO
+        locacaoDAO = new LocacaoDAOFake();
+        //Injeção desse locacaoDAO
+        service.setLocacaoDAO(locacaoDAO);
     }
 
     @Test

@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import br.ce.wcaquino.dao.LocacaoDAO;
+import br.ce.wcaquino.dao.LocacaoDAOFake;
 import exceptions.FilmeSemEstoqueException;
 import exceptions.LocadoraException;
 import org.junit.Before;
@@ -25,6 +27,7 @@ import br.ce.wcaquino.entidades.Usuario;
 public class CalculoValorLocacaoTest {
 
     private LocacaoService service;
+    private LocacaoDAO locacaoDAO;
 
     @Parameter
     public List<Filme> filmes;
@@ -38,6 +41,10 @@ public class CalculoValorLocacaoTest {
     @Before
     public void setup(){
         service = new LocacaoService();
+        //Passando um objeto que está implementando a interface locacaoDAO
+        locacaoDAO = new LocacaoDAOFake();
+        //Injeção desse locacaoDAO
+        service.setLocacaoDAO(locacaoDAO);
     }
 
     private static Filme filme1 = new Filme("Filme 1", 2, 4.0);

@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import br.ce.wcaquino.dao.LocacaoDAO;
 import br.ce.wcaquino.entidades.Filme;
 import br.ce.wcaquino.entidades.Locacao;
 import br.ce.wcaquino.entidades.Usuario;
@@ -16,9 +17,11 @@ import org.junit.Assert;
 import org.junit.jupiter.api.AssertionsKt;
 import org.junit.jupiter.api.Test;
 
-public class LocacaoService {
+public class LocacaoService  {
 
-	public Locacao alugarFilme(Usuario usuario, List<Filme> filmes) throws FilmeSemEstoqueException, LocadoraException {
+	private LocacaoDAO locacaoDAO;
+
+	public Locacao alugarFilme(Usuario usuario, List<Filme> filmes) throws FilmeSemEstoqueException, LocadoraException  {
 
 		if (usuario == null) {
 			throw new LocadoraException("Usuário vazio");
@@ -64,9 +67,13 @@ public class LocacaoService {
 		locacao.setDataRetorno(dataEntrega);
 		
 		//Salvando a locacao...	
-		//TODO adicionar método para salvar
+		locacaoDAO.salvar(locacao);
 		
 		return locacao;
 	}
 
+	//Passando externamente uma instância do dao para minha classe de serviço/injeção de dependência
+	public void setLocacaoDAO(LocacaoDAO locacaoDAO){
+		this.locacaoDAO = locacaoDAO;
+	}
 }
