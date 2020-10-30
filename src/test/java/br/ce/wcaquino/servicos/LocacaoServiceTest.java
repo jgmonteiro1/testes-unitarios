@@ -15,6 +15,7 @@ import exceptions.LocadoraException;
 import org.junit.*;
 import org.junit.rules.ErrorCollector;
 import org.junit.rules.ExpectedException;
+import org.mockito.Mockito;
 import sun.util.resources.cldr.wae.CalendarData_wae_CH;
 
 import java.util.Arrays;
@@ -48,7 +49,7 @@ public class LocacaoServiceTest {
     public void setup(){
         service = new LocacaoService();
         //Passando um objeto que está implementando a interface locacaoDAO
-        locacaoDAO = new LocacaoDAOFake();
+        locacaoDAO = Mockito.mock(LocacaoDAO.class);
         //Injeção desse locacaoDAO
         service.setLocacaoDAO(locacaoDAO);
     }

@@ -21,6 +21,7 @@ import org.junit.runners.Parameterized.Parameters;
 import br.ce.wcaquino.entidades.Filme;
 import br.ce.wcaquino.entidades.Locacao;
 import br.ce.wcaquino.entidades.Usuario;
+import org.mockito.Mockito;
 
 
 @RunWith(Parameterized.class)
@@ -42,7 +43,7 @@ public class CalculoValorLocacaoTest {
     public void setup(){
         service = new LocacaoService();
         //Passando um objeto que está implementando a interface locacaoDAO
-        locacaoDAO = new LocacaoDAOFake();
+        locacaoDAO = Mockito.mock(LocacaoDAO.class);
         //Injeção desse locacaoDAO
         service.setLocacaoDAO(locacaoDAO);
     }
