@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Test;
 public class LocacaoService  {
 
 	private LocacaoDAO locacaoDAO;
+	private SPCService spcService;
 
 	public Locacao alugarFilme(Usuario usuario, List<Filme> filmes) throws FilmeSemEstoqueException, LocadoraException  {
 
@@ -35,6 +36,10 @@ public class LocacaoService  {
 			if(filme.getEstoque() == 0){
 				throw  new FilmeSemEstoqueException("Filme sem estoque");
 			}
+		}
+
+		if(spcService.possuiNegativacao(usuario)){
+			throw new LocadoraException("Usuário negativado");
 		}
 
 
@@ -76,4 +81,5 @@ public class LocacaoService  {
 	public void setLocacaoDAO(LocacaoDAO locacaoDAO){
 		this.locacaoDAO = locacaoDAO;
 	}
+	public void setSpcService(SPCService spcService){this.spcService = spcService;}
 }
